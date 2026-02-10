@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+
+
+<title>Happy Birthday Dad</title>
+
+<style>
+
+#boot{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100vh;
+  background:black;
+  color:#32ff00;
+  font-family:monospace;
+  padding:40px;
+  font-size:1.2rem;
+  z-index:9999;
+}
+
+body.loaded #boot{
+  animation:fadeOut 1s forwards;
+}
+
+@keyframes fadeOut{
+  to{
+    opacity:0;
+    visibility:hidden;
+  }
+}
+
+
+
+/* GLOBAL RESET */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+/* BODY */
+
+body{
+  font-family:'Quicksand', sans-serif;
+background:#0b132b; /* elite navy */
+color:white;
+overflow-x:hidden;
+scroll-behavior:smooth;
+
+}
+
+h1, h2, h3{
+  font-family:'Poppins', sans-serif;
+  letter-spacing:1px;
+}
+
+h1{
+  font-weight:700;
+}
+
+.bubble-header{
+  font-family:'Fredoka', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight:700;
+
+  color:#cfe9ff; /* main fill */
+
+  text-shadow:
+    -2px -2px 0 #6bb6ff,
+     2px -2px 0 #6bb6ff,
+    -2px  2px 0 #6bb6ff,
+     2px  2px 0 #6bb6ff,   /* outline */
+
+     0px 6px 14px rgba(80,160,255,.45); /* glow */
+
+  letter-spacing:3px;
+}
+
+.bubble-header{
+  transform: translateY(0);
+  transition:.35s;
+animation: floatText 4s cubic-bezier(.45,.05,.55,.95) infinite;
+}
+
+@keyframes floatText{
+
+  0%{
+    transform:translateY(0);
+  }
+
+  50%{
+    transform:translateY(-10px);
+  }
+
+  100%{
+    transform:translateY(0);
+  }
+
+}
+
+
+
+.bubble-header:hover{
+  transform: translateY(-6px);
+}
+
+
+/* FULL SCREEN SECTIONS */
+
+.section{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:80px 20px;
+}
+
+
+/* BUTTONS */
+
+button{
+padding:14px 26px;
+border-radius:14px;
+border:none;
+font-size:1rem;
+cursor:pointer;
+background:white;
+color:#0b132b;
+font-weight:600;
+transition:.25s;
+}
+
+button:hover{
+transform:scale(1.07);
+}
+
+.iconRow{
+  display:flex;
+  gap:50px;
+  margin-top:60px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.iconBtn{
+  width:160px;
+  height:160px;
+  background:rgba(255,255,255,0.08);
+  border-radius:24px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:.3s;
+  backdrop-filter:blur(10px);
+}
+
+.iconBtn:hover{
+  transform:translateY(-8px) scale(1.05);
+  box-shadow:0 20px 40px rgba(0,0,0,.5);
+}
+
+.iconBtn span{
+  margin-top:14px;
+  font-size:1.1rem;
+  opacity:.85;
+}
+
+.iconBtn{
+  font-size:3.5rem;
+}
+
+.iconBtn svg{
+  transition:.3s;
+}
+
+.iconBtn:hover svg{
+  filter:drop-shadow(0 0 12px #4cc9f0);
+}
+
+.gallery{
+  width:100%;
+  overflow:visible;
+  position:relative;
+  max-width:100vw;
+}
+
+.track{
+  display:flex;
+  gap:50px;
+  width:max-content;
+  animation:scroll 35s linear infinite;
+}
+
+@keyframes scroll{
+  from{
+    transform:translateX(0);
+  }
+  to{
+    transform:translateX(-50%);
+  }
+}
+
+.photo{
+  width:240px;
+  height:240px;
+  background:rgba(255,255,255,0.08);
+  border-radius:22px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:4rem;
+  cursor:pointer;
+  transition:.35s;
+  backdrop-filter:blur(10px);
+  transition: transform .45s cubic-bezier(.2,.8,.2,1);
+
+}
+
+.photo.active{
+  transform:scale(2.8);
+  z-index:100;
+  pointer-events:auto;
+
+}
+
+.track:has(.active) .photo:not(.active){
+  pointer-events:none;
+}
+
+.photo:hover:not(.active){
+  transform:scale(1.15);
+}
+
+
+
+.track:has(.active) .photo:not(.active){
+  opacity:.35;
+  transform:scale(.9);
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* fills the card without stretching */
+  border-radius: 22px;
+  transition: transform 0.45s cubic-bezier(.2,.8,.2,1);
+  pointer-events: none; /* prevents image blocking clicks */
+}
+
+/* Zoom effect when .photo is active */
+.photo.active img {
+  transform: scale(1.2); /* zoom in image slightly */
+}
+
+/* Optional: subtle zoom on hover */
+.photo:hover:not(.active) img {
+  transform: scale(1.05);
+}
+
+
+/*music player */
+
+/* Music Section Styling */
+/* Container */
+#music-section {
+  max-width: 900px;
+  margin: 40px auto;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 0 15px; /* adds side padding on small screens */
+  box-sizing: border-box;
+}
+
+@media (max-width: 700px) {
+  .music-player, .song-queue {
+    max-width: 100%;
+  }
+}
+
+
+#music-section h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Flex container for player + queue */
+.music-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap; /* allows queue to move below player on small screens */
+  justify-content: center; /* keeps everything centered */
+}
+
+
+/* Music Player */
+.music-player {
+  flex: 2 1 300px; /* grows, shrinks, minimum width */
+  max-width: 500px; /* optional max width */
+}
+
+.song-queue {
+  flex: 1 1 200px;
+  max-width: 300px;
+}
+
+/* Album Art */
+.album-art img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+/* Song Info */
+.song-info {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.song-title {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.artist-name {
+  font-size: 14px;
+  color: #ccc;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-bottom: 15px;
+}
+
+.controls button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 26px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.controls button:hover {
+  transform: scale(1.2);
+  color: #1db954; /* subtle green highlight */
+}
+
+/* Progress Bar */
+.progress-bar {
+  background: rgba(255,255,255,0.2);
+  height: 6px;
+  width: 100%;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress {
+  background: #1db954; /* green progress */
+  height: 100%;
+  width: 0%;
+  border-radius: 3px;
+  transition: width 0.3s;
+}
+
+/* Queue */
+.song-queue {
+  flex: 1;
+  background: #3a3a3a;
+  padding: 20px;
+  border-radius: 15px;
+  color: #eee;
+  height: fit-content;
+}
+
+.song-queue h3 {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.song-queue ul {
+  list-style: none;
+  padding: 0;
+}
+
+.song-queue li {
+  padding: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.song-queue li:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* celebration section */
+/* Balloon groups for corners */
+/* Balloon group container */
+.balloon-group {
+  position: fixed; /* keep them in corners */
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* balloons stacked diagonally */
+  width: 80px; /* enough space for diagonal overlay */
+  height: 120px;
+}
+
+/* Balloons */
+.balloon {
+  width: 60px;
+  height: 80px;
+  border-radius: 50%;
+  position: absolute; /* overlay balloons inside group */
+  cursor: pointer;
+  animation: floatTilt 4s ease-in-out infinite;
+  transform-origin: bottom center; /* rotate around string */
+}
+
+/* Balloon strings */
+.balloon::after {
+  content: '';
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  width: 2px;
+  height: 50px;
+  background: #333;
+}
+
+/* Corner positions (keep balloon-group fixed) */
+.top-left { top: 20px; left: 20px; }
+.top-right { top: 20px; right: 20px; }
+.bottom-left { bottom: 20px; left: 20px; }
+.bottom-right { bottom: 20px; right: 20px; }
+
+/* Float & tilt animation */
+@keyframes floatTilt {
+  0%   { transform: translateY(0) rotate(-5deg); }
+  25%  { transform: translateY(-5px) rotate(3deg); }
+  50%  { transform: translateY(-10px) rotate(-3deg); }
+  75%  { transform: translateY(-5px) rotate(4deg); }
+  100% { transform: translateY(0) rotate(-5deg); }
+}
+
+/* Hover effect */
+.balloon:hover {
+  transform: scale(1.2) translateY(-10px) rotate(0deg);
+}
+
+/* DUOS: diagonal offset for two balloons */
+.top-left .balloon:nth-child(1) { left: 0; top: 0; animation-delay: 0s; }
+.top-left .balloon:nth-child(2) { left: 20px; top: 10px; animation-delay: 0.2s; }
+
+.top-right .balloon:nth-child(1) { right: 0; top: 0; animation-delay: 0s; }
+.top-right .balloon:nth-child(2) { right: 20px; top: 10px; animation-delay: 0.2s; }
+
+/* TRIOS: diagonal offset for three balloons */
+.bottom-left .balloon:nth-child(1) { left: 0; top: 0; animation-delay: 0s; }
+.bottom-left .balloon:nth-child(2) { left: 20px; top: 10px; animation-delay: 0.2s; }
+.bottom-left .balloon:nth-child(3) { left: 40px; top: 20px; animation-delay: 0.4s; }
+
+.bottom-right .balloon:nth-child(1) { right: 0; top: 0; animation-delay: 0s; }
+.bottom-right .balloon:nth-child(2) { right: 20px; top: 10px; animation-delay: 0.2s; }
+.bottom-right .balloon:nth-child(3) { right: 40px; top: 20px; animation-delay: 0.4s; }
+
+#confetti {
+  position: fixed;    /* make it stay on screen */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none; /* so balloons are clickable through it */
+  z-index: 1000;       /* on top of everything */
+}
+
+</style>
+</head>
+
+<body>
+<div id="boot">
+  <pre id="bootText"></pre>
+</div>
+
+
+
+<section class="section">
+
+<h1 style="font-size:4rem; margin-bottom:20px;" class = "bubble-header">
+Happy Birthday Pappa 🎉
+</h1>
+
+<p style="max-width:650px; font-size:1.4rem; opacity:.9; font-family: 'Quicksand', sans-serif;">
+Wishing you a day filled with love, laughter, and unforgettable moments. Thank you for being the incredible person you are. Here's to many more amazing years ahead! ❤️
+</p>
+
+<div style="font-size:2.5rem; margin-top:60px; opacity:.5;">
+↓
+</div>
+
+</section>
+
+<section class="section">
+
+<h2 style="font-size:2.5rem;" class="bubble-header">Choose an Experience</h2>
+
+<div class="iconRow">
+
+<div class="iconBtn" onclick="scrollToSection('memories')">
+  <img src="camera.jpeg" alt="Memories Icon" width="64" height="64">
+  <span>Memories</span>
+</div>
+
+<div class="iconBtn" onclick="scrollToSection('music-section')">
+  <img src="music.jpeg" alt="Music Icon" width="64" height="64">
+  <span>Music</span>
+</div>
+
+<div class="iconBtn" onclick="scrollToSection('celebrate')">
+  <img src="youtube.jpeg" alt="Cake Icon" width="64" height="64">
+  <span>Celebrate</span>
+</div>
+
+</div>
+
+</section>
+
+<section id="memories" class="section">
+
+<h2 style="font-size:2.7rem; margin-bottom:40px;" class = "bubble-header">
+Favorite Memories 📸
+</h2>
+
+<div class="gallery">
+
+  <div class="track">
+
+    <div class="photo"> <img src="IMG-20240113-WA0015.jpg"> </div>
+    <div class="photo"><img src="20230218_173225.jpg"></div>
+    <div class="photo"><img src="IMG-20251213-WA0138.jpg"></div>
+    <div class="photo"><img src="IMG-20260105-WA0065 (1).jpg"></div>
+    <div class="photo"><img src="IMG-20251219-WA0185.jpg"></div>
+    <div class="photo"><img src="IMG-20230719-WA0077.jpg"></div>
+
+    <!-- duplicate for seamless loop -->
+    <div class="photo"> <img src="IMG-20231114-WA0003.jpg"></div>
+    <div class="photo"><img src="IMG-20260105-WA0062.jpg"></div>
+    <div class="photo"><img src="20251218_114532.jpg"></div>
+    <div class="photo"><img src="IMG-20230723-WA0031.jpg"></div>
+    <div class="photo"><img src="IMG-20251219-WA0194.jpg"></div>
+    <div class="photo"><img src="IMG-20251219-WA0132.jpg"></div>
+
+    <div class="photo"> <img src="20250525_205040.mp4"></div>
+    <div class="photo"><img src="IMG-20240727-WA0011.jpg"></div>
+    <div class="photo"><img src="20251218_134329.jpg">/div>
+    <div class="photo"><img src="IMG-20240719-WA0023.jpg"></div>
+    <div class="photo"><img src="IMG-20240723-WA0015.jpg"></div>
+    <div class="photo"><img src="IMG-20240719-WA0019.jpg"></div>
+
+  </div>
+
+</div>
+
+</section>
+
+<!-- Music Section -->
+<section id="music-section">
+  <h2>Dad's Jams 🎵</h2>
+
+  <div class="music-container">
+
+    <!-- Main Player (Decorative) -->
+    <div class="music-player">
+      <div class="album-art">
+        <img src="album.jpeg" alt="Album Art">
+      </div>
+
+      <div class="song-info">
+        <p class="song-title">Click a song from the queue!</p>
+        <p class="artist-name">Enjoy the music 🎶</p>
+      </div>
+
+      <div class="controls">
+        <button class="prev">⏮️</button>
+        <button class="play">▶️</button>
+        <button class="next">⏭️</button>
+      </div>
+
+      <div class="progress-bar">
+        <div class="progress"></div>
+      </div>
+    </div>
+
+    <!-- Queue -->
+    <div class="song-queue">
+      <h3>Up Next</h3>
+      <ul>
+        <li><a style="color: #bae5ef;" href="https://www.youtube.com/watch?v=LK7-_dgAVQE&list=RDLK7-_dgAVQE&start_radio=1" target="_blank">Tauba Tauba - Bad Newz</a></li>
+        <li><a style="color: #bae5ef;" href="https://www.youtube.com/watch?v=5Eqb_-j3FDA&list=RD5Eqb_-j3FDA&start_radio=1" target="_blank">Pasoori - Coke Studio</a></li>
+        <li><a style="color: #bae5ef;" href="https://www.youtube.com/watch?v=NZAi6QTNZtE&list=RDNZAi6QTNZtE&start_radio=1" target="_blank">Main Hoon Don - DON</a></li>
+        <li><a style="color: #bae5ef;" href="https://www.youtube.com/watch?v=cNV5hLSa9H8&list=PLPjVGzmZ5fQz7l9kK5rEV5B-SgciIm-Q3" target="_blank">Tujhe Dekha Toh - Dilwale Dulhania Le Jayenge</a></li>
+        <li><a style="color: #bae5ef;" href="https://www.youtube.com/watch?v=7iqNZrEHrLc&list=PLdHdorlgXqGVDMsm3QlBNJzYPL2OzQhM0" target="_blank">Mehndi Laga Ke Rakhna - Dilwale Dulhania Le Jayenge</a></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<section id="celebrate" class="section">
+  <canvas id="confetti"></canvas>
+
+  <!-- Top-left balloons -->
+  <div class="balloon-group top-left">
+    <div class="balloon" style="background:#7cc281;"></div>
+    <div class="balloon" style="background:#e1c2f0;"></div>
+  </div>
+
+  <!-- Top-right balloons -->
+  <div class="balloon-group top-right">
+    <div class="balloon" style="background:#a8517e;"></div>
+    <div class="balloon" style="background:#7cc281;"></div>
+  </div>
+
+  <!-- Bottom-left balloons -->
+  <div class="balloon-group bottom-left">
+    <div class="balloon" style="background:#e1c2f0;"></div>
+    <div class="balloon" style="background:#a8517e;"></div>
+    <div class="balloon" style="background:#7cc281;"></div>
+  </div>
+
+  <!-- Bottom-right balloons -->
+  <div class="balloon-group bottom-right">
+    <div class="balloon" style="background:#7cc281;"></div>
+    <div class="balloon" style="background:#e1c2f0;"></div>
+    <div class="balloon" style="background:#a8517e;"></div>
+  </div>
+</section>
+
+<section class="section" id="cake-letter" style="background:#0b132b; color:white; text-align:center; padding:100px 20px;">
+  <img src="Vintage cake.jpeg" alt="Birthday Cake" style="width:250px; max-width:80%; margin-bottom:30px;">
+  <h2 class="bubble-header" style="font-size:2.8rem; margin-bottom:20px;">Happy Birthday Pappa! 🎉</h2>
+  <p style="max-width:650px; font-size:1.4rem; line-height:1.6; margin:auto; opacity:0.9; font-family: 'Quicksand', sans-serif;">
+    Dear Pappa,<br><br>
+    Today is all about you! Thank you for filling our lives with love, laughter, and countless memories. Your guidance, support, and warm heart make every day brighter. I hope this birthday brings you the same joy and happiness you bring to everyone around you.<br><br>
+    Wishing you endless smiles, sweet moments, and of course, a big delicious cake! Here's to another year of amazing adventures together. ❤️<br><br>
+    With all my love,<br>
+    Zia Mol
+  </p>
+</section>
+
+
+<script>
+
+const lines = [
+  "Initializing Birthday Protocol...",
+  "Loading Memories...",
+  "Starting Celebration Engine...",
+  "",
+  "System Ready ✓",
+  "",
+  "Happy Birthday Pappa ❤️"
+];
+
+let line = 0;
+let char = 0;
+
+function typeBoot(){
+  const el = document.getElementById("bootText");
+
+  if(line < lines.length){
+    if(char < lines[line].length){
+      el.innerHTML += lines[line][char];
+      char++;
+      setTimeout(typeBoot, 30);
+    } else {
+      el.innerHTML += "<br>";
+      line++;
+      char = 0;
+      setTimeout(typeBoot, 400);
+    }
+  }
+  else{
+
+    // 🔥 THIS triggers the fade
+    setTimeout(()=>{
+      document.body.classList.add("loaded");
+    },1000);
+
+  }
+}
+
+typeBoot();
+
+
+function scrollToSection(id){
+  document.getElementById(id).scrollIntoView({
+    behavior:"smooth"
+  });
+}
+
+const photos = document.querySelectorAll(".photo");
+const track = document.querySelector(".track");
+
+photos.forEach(photo => {
+
+  photo.addEventListener("click", () => {
+
+    // if already active → reset + resume scroll
+    if(photo.classList.contains("active")){
+        photo.classList.remove("active");
+        track.style.animationPlayState = "running";
+    }
+
+    // otherwise zoom + pause
+    else{
+        photos.forEach(p => p.classList.remove("active"));
+
+        photo.classList.add("active");
+        track.style.animationPlayState = "paused";
+    }
+
+  });
+
+});
+
+
+const canvas = document.getElementById('confetti');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let confetti = [];
+let confettiAnimation = null;
+let confettiActive = false;
+
+function createConfetti(color = 'pink', count = 50) {
+    confetti = [];
+    for (let i = 0; i < count; i++) {
+        confetti.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height - canvas.height,
+            r: Math.random() * 6 + 3,
+            color: color,
+            tilt: Math.random() * 10 - 5,
+            tiltAngle: Math.random() * Math.PI
+        });
+    }
+}
+
+function drawConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    confetti.forEach(c => {
+        ctx.beginPath();
+        ctx.moveTo(c.x + c.tilt, c.y);
+        ctx.lineTo(c.x + c.tilt + c.r / 2, c.y + c.r);
+        ctx.strokeStyle = c.color;
+        ctx.lineWidth = c.r / 2;
+        ctx.stroke();
+
+        c.y += 1.5; // slow fall
+        c.tiltAngle += 0.05;
+        c.tilt = Math.sin(c.tiltAngle) * 10;
+
+        if (c.y > canvas.height) c.y = -10;
+    });
+    confettiAnimation = requestAnimationFrame(drawConfetti);
+}
+
+function stopConfetti() {
+    confettiActive = false;
+    cancelAnimationFrame(confettiAnimation);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+// Balloon click behavior
+document.querySelectorAll('.balloon').forEach(b => {
+    b.addEventListener('click', () => {
+        const bg = b.style.background.toLowerCase();
+        if(bg.includes('7cc281')) { // green balloon
+            if(!confettiActive){
+                createConfetti('pink', 40); // mild, pink confetti
+                confettiActive = true;
+                drawConfetti();
+            }
+        } else if(bg.includes('a8517e')) { // red balloon
+            stopConfetti();
+        }
+    });
+});
+
+// Adjust canvas on resize
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
+</script>
+
+</body>
+</html>
